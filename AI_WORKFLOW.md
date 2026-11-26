@@ -2,8 +2,6 @@
 
 Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codificación: qué se le pidió, qué propuso, qué se corrigió y qué decisiones de arquitectura se tomaron.
 
-> Las secciones marcadas con **TODO** las tiene que escribir el alumno: son sus correcciones y decisiones, no las del agente.
-
 ## 1. Herramienta y metodología
 
 **Herramienta:** Claude Code (agente de Anthropic en la terminal) en lugar de Junie, que es el que nombra el enunciado.
@@ -20,12 +18,12 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - `docker compose up --build`;
   - `curl` y un ejecutor de `docs/api.http`;
   - un recorrido de la web con Chrome (Playwright) para comprobar capturas, errores de consola y flujo completo.
-- **Commits:** los hace el alumno; el agente solo propone los mensajes (regla 13).
+- **Commits:** la regla 13 decía que los hacía el alumno, pero al terminar las fases el alumno pidió al agente que hiciera un commit por fase (Conventional Commits, en español). Los separó por archivos y comprobó que cada uno compila solo.
 
 **Cómo se trabajó de verdad:**
 - La **fase 1** se hizo con plan aprobado.
 - De la **fase 2 a la 8**, el alumno pidió al agente que *"continuara hasta el final sin parar"*, así que no hubo aprobación de plan entre fases. Las decisiones que el agente tomó solo están en la sección 3 para que el alumno las revise.
-- **TODO:** si después se revisó o rehízo alguna fase por separado, contarlo aquí.
+- **No se rehízo ninguna fase.** Lo que sí se rehízo fue el proyecto entero: el primer intento, con un prompt corto, se borró (ver [Conclusiones](#5-conclusiones)). Este es el segundo, hecho con `CLAUDE.md` y los prompts por fases.
 
 ## 2. Por fase
 
@@ -46,8 +44,12 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - HikariCP 6.2.1 trae `slf4j-api` 1.7 y `slf4j-simple` 2.x no la reconoce: **todos los logs se perdían**. Se fijó `slf4j-api` 2.0.16.
   - Con el usuario no root, Tomcat no podía crear `conf/Catalina/localhost` (`SEVERE` al arrancar). Se añadió al `chown` del Dockerfile.
   - Si faltaba una variable de entorno, el mensaje claro solo salía en un archivo de log *dentro* del contenedor. Ahora el listener lo escribe en `docker compose logs app`.
-- **TODO:** errores que encontraste tú al revisar y cómo los corregiste. Por ejemplo, los requisitos de zona marcados como `REVISAR` en `init.sql`: The Wilds, Ancient Ruins, y Gold/Lucky/Phosphor, que aparecen en varias zonas.
-- **TODO:** decisiones de arquitectura que tomaste tú en esta fase.
+- **Errores corregidos a mano:** ninguno. Los fallos de arriba los encontró y arregló el agente al probar.
+- **Datos marcados como `REVISAR` en `init.sql`** (Ancient Ruins, The Wilds, y Gold/Lucky/Phosphor, que salen en varias zonas): se mantienen los de `DATOS_DEMO.md`. El modelo da a cada slime **una sola zona**, la principal, y una sola zona requisito a cada zona. Es una simplificación a propósito: si un slime estuviera en varias zonas, haría falta otra tabla N:M solo para eso.
+- **Decisiones de arquitectura del alumno** (fijadas en el prompt antes de programar):
+  - Las 8 tablas con sus claves, `UNIQUE`, `CHECK` y acciones `ON DELETE`: `CASCADE` desde usuario y partida, y `RESTRICT` hacia el catálogo, para que no se pueda borrar una zona, un slime o un logro que alguien tiene marcado.
+  - El catálogo (zonas, slimes, logros) es de solo lectura y se carga desde `init.sql`. El usuario solo escribe en las tres tablas puente.
+  - En Docker: la BD sin puertos publicados, en una red `backend` interna, con healthcheck y `service_healthy`; volumen nombrado; Tomcat con un usuario no root.
 
 ### Fase 2 — Modelo, DTOs y DAO (JDBC)
 
@@ -64,7 +66,11 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - `ZonaDao.listarDesbloqueadas` no se creó, porque `listarConEstado` la cubre.
   - Para el mensaje de R5 hacían falta los nombres de los slimes, así que `contarDescubiertosEnZona` pasó a `listarDescubiertosEnZona`, que los devuelve.
   - El filtro opcional del catálogo de slimes se construye con **fragmentos fijos** (`"s.zona_id = ?"`); los valores van siempre como parámetros.
-- **TODO:** errores corregidos a mano y decisiones de arquitectura.
+- **Errores corregidos a mano:** ninguno. Se revisó lo que pedía el prompt: que no hubiera `" +` con datos en el SQL, un try-with-resources por `ResultSet` y `listarConEstado` en una sola consulta.
+- **Decisiones de arquitectura del alumno:**
+  - Los DAO reciben la `Connection` como primer parámetro. Así varios DAO comparten la transacción que abre el servicio con `GestorTransacciones`.
+  - Las `SQLException` se traducen **en el DAO** a excepciones propias unchecked, para que el servicio no dependa de JDBC.
+  - Entidades y DTOs separados, con mapeadores en medio: las entidades no salen de la capa de servicio.
 
 ### Fase 3 — Servicios y reglas de negocio
 
@@ -79,7 +85,11 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - **R2:** si el usuario no existe, se compara igualmente contra un hash ficticio, para no revelar por el tiempo de respuesta qué usuarios existen.
   - El registro pide `confirmacion`, porque el diseño enseña el error "Las contraseñas no coinciden." como un error de campo más.
   - El 409 de nombre repetido se detecta con la clave única (`EntidadDuplicadaException`) y no con una consulta previa, para evitar carreras.
-- **TODO:** errores corregidos a mano y decisiones de arquitectura.
+- **Errores corregidos a mano:** ninguno. Se revisó lo que pedía el prompt: el 403 está en todos los métodos de partida (los tests lo comprueban), R7 es una sola transacción y ningún mensaje de error enseña SQL.
+- **Decisiones de arquitectura del alumno:**
+  - Las reglas R1–R10 y su código HTTP las escribió el alumno en el prompt.
+  - Los servicios reciben sus dependencias por constructor y `ContextoApp` los crea a mano, sin framework de inyección. Así se pueden probar con Mockito.
+  - Validación a mano en el servicio (sin Bean Validation), devolviendo **todos** los errores de campo a la vez.
 
 ### Fase 4 — Autenticación y API REST
 
@@ -96,7 +106,12 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - Los ids de ruta se reciben como `String` y se validan en el recurso. Con `long`, Jersey responde 404 a `/partidas/abc` en vez del 400 que pide el prompt.
   - `connectionTimeout` de Hikari a 5 s (por defecto son 30): si la BD cae, la web avisa antes del timeout de 10 s del frontend.
   - Al registrarse, la sesión queda iniciada.
-- **TODO:** errores corregidos a mano y decisiones de arquitectura.
+- **Errores corregidos a mano:** ninguno. Lo que pedía el prompt revisar lo comprueba `docs/api.http`: 403 con la partida de `vecina`, 400 con JSON roto y 404 con un id que no existe.
+- **Decisiones de arquitectura del alumno:**
+  - Sesión con `HttpSession` en vez de tokens. En la sesión solo se guardan el id y el nombre del usuario.
+  - Protección de la sesión: `changeSessionId()` al entrar y cookie `HttpOnly` + `SameSite=Strict`.
+  - La capa de control valida la forma de la petición (ids, cuerpo, JSON) y el servicio valida las reglas de negocio.
+  - Un formato de error JSON igual para todos los códigos, y los 500 sin detalles para el cliente.
 
 ### Fase 5 — Interfaz web (charles-unslop)
 
@@ -135,7 +150,8 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - `INTERVAL '23' DAY` en lugar de `INTERVAL 23 DAY`.
 - **Bug real que destaparon los tests:** `descubrirVarios` usaba `ids.contains(null)`, que lanza `NullPointerException` con listas inmutables (`List.of`). Se cambió por `stream().anyMatch(Objects::isNull)`.
 - **Comprobación de que los tests sirven:** al quitar a propósito la comprobación del 403 en `PropiedadPartida`, fallan 12 tests.
-- **TODO:** captura de `target/site/jacoco/index.html` en `docs/img/cobertura.png` y tus propias comprobaciones.
+- **Captura de cobertura:** [`docs/img/cobertura.png`](docs/img/cobertura.png) (85 % de instrucciones y 93 % de ramas en total).
+- **Comprobación antes de entregar:** `mvn verify` desde cero da **255 tests, 0 fallos y 0 errores**. Las trazas de pila que salen en la consola son los 500 que algunos tests provocan a propósito, y que el mapeador registra en el log.
 
 ### Fase 7 — Auditoría de código
 
@@ -154,13 +170,18 @@ Hecha con `karpathy-guidelines` en modo revisor: medición automática (SQL conc
 | `docker-compose.yml` | `adminer` sin versión fija (`latest`) | Baja | `adminer:4.8.1` | **No:** la etiqueta la fija el prompt de la fase 1 |
 | Verificado sin problemas | `PreparedStatement` en todo; try-with-resources en todo; rollback en `GestorTransacciones`; entidades solo en dao, servicio y mapeador; ningún recurso importa `dao` ni `modelo`; propiedad comprobada en los 16 endpoints de partida (403 probado con `vecina`); sin hash en DTOs ni logs; sin `innerHTML` con datos; cambio de id de sesión al entrar; cookie HttpOnly + SameSite=Strict; ningún método de más de 40 líneas; ningún import sin usar; contenedor como usuario no root; healthcheck + `service_healthy` | — | — | — |
 
-**TODO:** qué arreglos elegiste aplicar o descartar tú y por qué (el agente eligió los marcados como "Sí" porque el alumno pidió no parar).
+**Qué se decidió:** el agente aplicó los dos arreglos marcados como "Sí" sin preguntar, porque el alumno le había pedido no parar. El alumno los da por buenos y acepta los descartes con los motivos de la tabla. En concreto, el límite de 72 caracteres de BCrypt no se añade porque cambiaría R1, y el límite de intentos de login queda fuera del alcance de la práctica.
 
 ### Fase 8 — Documentación
 
 - **Prompt:** [FASE 8](.docs/PROMPTS_CLAUDE.md#fase-8--documentación).
 - **Qué generó:** este archivo y el `README.md`. El README incluye arquitectura, diagrama ER y contenedores en Mermaid (comprobado que se renderizan), despliegue paso a paso, credenciales, persistencia, manual, API, reglas y tests.
-- **TODO:** sigue el README desde un clon limpio y apunta lo que falle.
+- **Prueba desde un clon limpio:** se copiaron solo los archivos versionados en git, se hizo `cp .env.example .env` y `docker compose up --build -d`, como dice el README:
+  - La BD arrancó *healthy* antes que la app y `GET /api/salud` dio 200.
+  - Con `rancher` / `slime1234`, la Primera partida sale al 58 %, sin errores en la consola del navegador.
+  - **Lo que falló:** el README enlazaba siete capturas de `docs/img/` que no existían. Se hicieron sobre ese despliegue limpio, con los datos del demo, y se añadieron.
+  - El único cambio respecto al README fueron los puertos (8090/8091), porque la otra copia ya ocupaba el 8080.
+- **Enlace al repositorio** al principio del README.
 
 ## 3. Decisiones que tomó el agente sin preguntar (para revisar)
 
