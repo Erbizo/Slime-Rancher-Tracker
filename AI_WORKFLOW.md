@@ -8,8 +8,6 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
 
 **Herramienta:** Claude Code (agente de Anthropic en la terminal) en lugar de Junie, que es el que nombra el enunciado.
 
-**TODO:** motivo de usar Claude Code y autorización del profesor (fecha y cómo se pidió).
-
 **Metodología:**
 - **`CLAUDE.md` en la raíz** (el "Prompt 0"): stack fijo, paquetes, dependencias entre capas, las 13 reglas obligatorias (cero credenciales en el código, `PreparedStatement`, try-with-resources, `GestorTransacciones`, excepciones propias, códigos HTTP, no hacer commits…). Claude Code lo carga en cada conversación.
 - **Trabajo por fases** con los prompts de [`.docs/PROMPTS_CLAUDE.md`](.docs/PROMPTS_CLAUDE.md): esqueleto y Docker → DAO → servicios → API → interfaz → tests → auditoría → documentación.
@@ -123,7 +121,6 @@ Registro de cómo se construyó **Slime Rancher Tracker** con un agente de codif
   - Con la BD parada sale un mensaje claro.
   - A 375 px no hay scroll horizontal.
   - En consola solo aparecen los avisos de red de Chrome por los 4xx provocados a propósito.
-- **TODO:** diferencias que viste tú al comparar con las capturas y qué corregiste. Guarda las capturas finales en `docs/img/`.
 
 ### Fase 6 — Batería de pruebas
 
@@ -194,9 +191,11 @@ Desde la fase 2 se trabajó sin parar entre fases, así que estas decisiones no 
 ## 5. Conclusiones
 
 ### Qué pasó
-El primer intento salió mal. El prompt era corto y casi no especificaba nada, así que la IA tuvo que
-decidir por su cuenta la arquitectura, los datos y el diseño. El resultado no se parecía a lo que
-quería y tuve que empezar de nuevo.
+El primer intento salió mal y tuve que borrarlo entero. El prompt era corto y casi no especificaba
+nada, así que la IA decidió por su cuenta y el resultado tenía tres problemas graves:
+- la arquitectura estaba mal planteada;
+- el diseño de la web era muy malo;
+- la autenticación de usuarios no funcionaba bien.
 
 En el segundo intento cambié de enfoque. Antes de escribir código preparé un prompt largo y explícito,
 dividido en fases, que incluía:
@@ -204,8 +203,8 @@ dividido en fases, que incluía:
 - los datos de prueba;
 - las vistas de la web ya diseñadas, para que la IA tuviera una referencia visual exacta.
 
-Con ese contexto la web quedó mucho mejor y tardé bastante menos, porque hubo menos correcciones y
-menos idas y vueltas.
+Como todo estaba especificado, la IA no tuvo que inventarse nada y lo hizo como yo quería. La web
+quedó mucho mejor, tardé bastante menos y no tuve que corregir errores.
 
 ### Qué he aprendido
 - **El prompt y el contexto lo deciden casi todo.** Si no se lo especificas, la IA lo rellena con
