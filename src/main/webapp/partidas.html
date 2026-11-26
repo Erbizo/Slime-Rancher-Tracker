@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis partidas · Slime Rancher Tracker</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/estilos.css">
+<script src="js/tema.js"></script>
+<script type="module" src="js/paginas/partidas.js"></script>
+</head>
+<body>
+<header class="cabecera">
+  <a class="marca cabecera__marca-ancha" href="index.html"><span class="marca__slime" aria-hidden="true"></span><span class="marca__nombre">Slime Rancher Tracker</span></a>
+  <div class="cabecera__usuario cabecera__usuario--partidas">
+    <span class="conectado">Conectado como <strong data-usuario>…</strong></span>
+    <button type="button" class="btn-tema" data-alternar-tema aria-label="Cambiar a modo oscuro"><svg class="tema-luna" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="tema-sol" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+    <a class="enlace-salir" href="login.html" data-salir>Salir</a>
+  </div>
+</header>
+
+<main class="contenedor contenedor--mini">
+  <h1 class="titulo-pagina">Mis partidas</h1>
+
+  <form class="nueva-partida" data-nueva novalidate>
+    <div class="nueva-partida__fila" data-campo>
+      <label class="nueva-partida__etiqueta"><span class="solo-lector">Nombre de la nueva partida</span>
+        <input class="campo" type="text" name="nombre" maxlength="40" autocomplete="off" placeholder="Nombre de la nueva partida"></label>
+      <button type="submit" class="btn btn--primario">Crear partida</button>
+    </div>
+  </form>
+
+  <div class="avisos" aria-live="polite" data-aviso></div>
+
+  <ul class="lista tarjeta lista--partidas" data-lista>
+    <li class="estado">Cargando partidas…</li>
+  </ul>
+</main>
+</body>
+</html>
