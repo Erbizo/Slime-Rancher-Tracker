@@ -193,4 +193,32 @@ Desde la fase 2 se trabajó sin parar entre fases, así que estas decisiones no 
 
 ## 5. Conclusiones
 
-**TODO:** qué aportó el agente, dónde se equivocó, qué tuviste que corregir tú y qué harías distinto.
+### Qué pasó
+El primer intento salió mal. El prompt era corto y casi no especificaba nada, así que la IA tuvo que
+decidir por su cuenta la arquitectura, los datos y el diseño. El resultado no se parecía a lo que
+quería y tuve que empezar de nuevo.
+
+En el segundo intento cambié de enfoque. Antes de escribir código preparé un prompt largo y explícito,
+dividido en fases, que incluía:
+- el stack, la estructura de paquetes y las reglas de negocio;
+- los datos de prueba;
+- las vistas de la web ya diseñadas, para que la IA tuviera una referencia visual exacta.
+
+Con ese contexto la web quedó mucho mejor y tardé bastante menos, porque hubo menos correcciones y
+menos idas y vueltas.
+
+### Qué he aprendido
+- **El prompt y el contexto lo deciden casi todo.** Si no se lo especificas, la IA lo rellena con
+  suposiciones. Darle requisitos claros, ejemplos y el diseño de las pantallas antes de empezar ahorra
+  más tiempo del que cuesta prepararlos.
+- **Las skills mejoran el resultado.** `karpathy-guidelines` le hizo explicar sus suposiciones y
+  hacer cambios pequeños y comprobables. `charles-unslop` evitó que la interfaz tuviera el aspecto
+  genérico de "hecho con IA".
+- **Para programar funciona mejor desde la terminal (CLI) que desde la aplicación de chat.** Desde la
+  CLI trabaja directamente sobre los archivos del proyecto y puede ejecutar Maven, Docker y los tests
+  para comprobar lo que hace. Además, con el modo plan reviso cada fase antes de que toque nada.
+
+### Qué haré en los próximos proyectos
+Antes de pedir código dedicaré tiempo a preparar el contexto: requisitos, decisiones de diseño, datos
+de ejemplo y un `CLAUDE.md` con las reglas del proyecto. También dividiré el trabajo en fases que pueda
+revisar y usaré skills y la CLI desde el principio.
