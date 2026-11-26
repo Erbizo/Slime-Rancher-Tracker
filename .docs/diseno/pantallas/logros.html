@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logros · Slime Rancher Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<script src="tema.js"></script>
+<style>
+  .logro { display: flex; align-items: flex-start; gap: 14px; padding: 12px 8px; }
+  .logro__texto { flex: 1 1 auto; min-width: 0; }
+  .logro__cabeza { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; }
+  .logro__cabeza span:first-child { font-weight: 600; }
+  .grupo-logros { padding: 4px 8px; }
+</style>
+</head>
+<body>
+<header class="cabecera">
+  <a class="marca" href="panel.html"><span class="marca__slime" aria-hidden="true"></span><span class="marca__nombre">Slime Rancher Tracker</span></a>
+  <nav class="nav" aria-label="Principal">
+    <a href="panel.html">Panel</a>
+    <a href="zonas.html">Zonas</a>
+    <a href="slimepedia.html">Slimepedia</a>
+    <a href="logros.html" aria-current="page">Logros</a>
+  </nav>
+  <div class="cabecera__usuario">
+    <a class="selector-partida" href="partidas.html"><span>Partida</span><strong>Primera partida</strong>
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: var(--texto-3)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+    <button type="button" class="btn-tema" data-alternar-tema aria-label="Cambiar a modo oscuro"><svg class="tema-luna" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="tema-sol" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+    <a class="enlace-salir" href="entrar.html">Salir</a>
+  </div>
+</header>
+
+<main class="contenedor contenedor--estrecho" style="gap: 32px">
+  <div>
+    <h1 class="titulo-pagina">Logros</h1>
+    <p class="subtitulo">6 de 15 logros conseguidos</p>
+  </div>
+
+  <section style="display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px"><h2 class="titulo-seccion">Exploración</h2><span style="color: var(--texto-2)">4 de 6</span></div>
+    <ul class="tarjeta grupo-logros">
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Más allá del rancho"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Más allá del rancho</span><span class="meta">3 nov</span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea tu primera zona fuera de The Ranch.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Piedra azul"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Piedra azul</span><span class="meta">9 nov</span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea Indigo Quarry.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Musgo hasta las rodillas"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Musgo hasta las rodillas</span><span class="meta">12 nov</span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea Moss Blanket.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Lo que dejaron los antiguos"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Lo que dejaron los antiguos</span><span class="meta">hoy</span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea Ancient Ruins.</p>
+          <p class="nota">Lo conseguí justo antes de cerrar la partida.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Arena de cristal"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Arena de cristal</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea Glass Desert.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Todo el mapa"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Todo el mapa</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Desbloquea todas las zonas.</p></div></li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px"><h2 class="titulo-seccion">Slimes</h2><span style="color: var(--texto-2)">2 de 4</span></div>
+    <ul class="tarjeta grupo-logros">
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Primer contacto"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Primer contacto</span><span class="meta">3 nov</span></div><p class="subtitulo" style="margin-top: 2px">Descubre tu primer slime.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="true" aria-label="Desmarcar Media Slimepedia"><i class="plort plort--grande plort--hecho"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Media Slimepedia</span><span class="meta">14 nov</span></div><p class="subtitulo" style="margin-top: 2px">Descubre 9 slimes distintos.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Brillo dorado"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Brillo dorado</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Descubre el Gold slime.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Slimepedia completa"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Slimepedia completa</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Descubre los 18 slimes.</p></div></li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px"><h2 class="titulo-seccion">Rancho</h2><span style="color: var(--texto-2)">0 de 3</span></div>
+    <ul class="tarjeta grupo-logros">
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Primer corral"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Primer corral</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Construye un corral en el rancho.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Silo lleno"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Silo lleno</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Llena un silo hasta arriba.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Diez días sin Tarr"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Diez días sin Tarr</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Pasa diez días seguidos sin que aparezca un Tarr.</p></div></li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px"><h2 class="titulo-seccion">Secretos</h2><span style="color: var(--texto-2)">0 de 2</span></div>
+    <ul class="tarjeta grupo-logros">
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Diario escondido"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Diario escondido</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Encuentra un diario oculto fuera del rancho.</p></div></li>
+      <li class="logro"><button type="button" class="check-plort" role="checkbox" aria-checked="false" aria-label="Marcar Camino de vuelta"><i class="plort plort--grande"></i></button>
+        <div class="logro__texto"><div class="logro__cabeza"><span>Camino de vuelta</span><span class="meta"></span></div><p class="subtitulo" style="margin-top: 2px">Activa un teletransporte de regreso al rancho.</p></div></li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

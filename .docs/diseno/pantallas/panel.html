@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Slime Rancher Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<script src="tema.js"></script>
+</head>
+<body>
+<header class="cabecera">
+  <a class="marca" href="panel.html"><span class="marca__slime" aria-hidden="true"></span><span class="marca__nombre">Slime Rancher Tracker</span></a>
+  <nav class="nav" aria-label="Principal">
+    <a href="panel.html" aria-current="page">Panel</a>
+    <a href="zonas.html">Zonas</a>
+    <a href="slimepedia.html">Slimepedia</a>
+    <a href="logros.html">Logros</a>
+  </nav>
+  <div class="cabecera__usuario">
+    <a class="selector-partida" href="partidas.html"><span>Partida</span><strong>Primera partida</strong>
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: var(--texto-3)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+    <button type="button" class="btn-tema" data-alternar-tema aria-label="Cambiar a modo oscuro"><svg class="tema-luna" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="tema-sol" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+    <a class="enlace-salir" href="entrar.html">Salir</a>
+  </div>
+</header>
+
+<main class="contenedor" style="padding-top: 48px; gap: 48px">
+  <section class="panel-cabeza" aria-labelledby="titulo-progreso">
+    <div class="panel-cabeza__numero">
+      <p class="subtitulo" style="margin: 0 0 8px">Primera partida, actualizada hoy a las 18:42</p>
+      <h1 id="titulo-progreso" class="cifra">58 %</h1>
+      <p class="cifra-texto">del Far, Far Range registrado. Zonas, Slimepedia y logros cuentan lo mismo.</p>
+    </div>
+    <div class="resumen tarjeta">
+      <a class="resumen__fila" href="zonas.html"><span>Zonas</span>
+        <span class="pips" aria-hidden="true"><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort"></i><i class="plort"></i></span>
+        <span>5 de 7</span></a>
+      <a class="resumen__fila" href="slimepedia.html"><span>Slimepedia</span>
+        <span class="pips" aria-hidden="true"><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i></span>
+        <span>11 de 18</span></a>
+      <a class="resumen__fila" href="logros.html"><span>Logros</span>
+        <span class="pips" aria-hidden="true"><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort plort--hecho"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i><i class="plort"></i></span>
+        <span>6 de 15</span></a>
+    </div>
+  </section>
+
+  <div class="dos-columnas">
+    <section class="tarjeta" style="padding: 24px; min-width: 0" aria-labelledby="titulo-zonas">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 16px">
+        <h2 id="titulo-zonas" class="titulo-seccion">Slimepedia por zona</h2>
+        <a href="slimepedia.html" style="font-weight: 600; text-decoration: none">Abrir Slimepedia</a>
+      </div>
+      <div class="fila-zona"><span style="font-weight: 600">Dry Reef</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini c-pink" title="Pink"></i><i class="slime slime--mini c-rock" title="Rock"></i><i class="slime slime--mini c-tabby" title="Tabby"></i><i class="slime slime--mini c-phosphor" title="Phosphor"></i><i class="slime slime--mini slime--oculto" title="Sin descubrir"></i></span><span>4/5</span></div>
+      <div class="fila-zona"><span style="font-weight: 600">Indigo Quarry</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini c-rad" title="Rad"></i><i class="slime slime--mini c-crystal" title="Crystal"></i><i class="slime slime--mini c-puddle" title="Puddle"></i></span><span>3/3</span></div>
+      <div class="fila-zona"><span style="font-weight: 600">Moss Blanket</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini c-boom" title="Boom"></i><i class="slime slime--mini c-honey" title="Honey"></i><i class="slime slime--mini c-hunter" title="Hunter"></i><i class="slime slime--mini slime--oculto" title="Sin descubrir"></i></span><span>3/4</span></div>
+      <div class="fila-zona"><span style="font-weight: 600">Ancient Ruins</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini c-quantum" title="Quantum"></i></span><span>1/1</span></div>
+      <div class="fila-zona"><span style="color: var(--texto-3)">Glass Desert</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini slime--oculto"></i><i class="slime slime--mini slime--oculto"></i><i class="slime slime--mini slime--oculto"></i><i class="slime slime--mini slime--oculto"></i><span class="meta" style="margin-left: 4px">zona bloqueada</span></span><span>0/4</span></div>
+      <div class="fila-zona"><span style="color: var(--texto-3)">The Wilds</span>
+        <span class="fila-zona__slimes"><i class="slime slime--mini slime--oculto"></i><span class="meta" style="margin-left: 4px">zona bloqueada</span></span><span>0/1</span></div>
+    </section>
+
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 32px">
+      <section style="display: flex; flex-direction: column; gap: 12px" aria-labelledby="titulo-ahora">
+        <h2 id="titulo-ahora" class="titulo-seccion">Ahora puedes</h2>
+        <a class="accion accion--principal" href="zonas.html"><span style="font-weight: 600">Desbloquear Glass Desert</span><span style="font-size: 14px">Ancient Ruins ya está abierta</span></a>
+        <a class="accion" href="slimepedia.html"><span style="font-weight: 600">Buscar al Lucky</span><span class="meta">Dry Reef</span></a>
+        <a class="accion" href="slimepedia.html"><span style="font-weight: 600">Buscar al Gold</span><span class="meta">Moss Blanket</span></a>
+      </section>
+      <section style="display: flex; flex-direction: column; gap: 12px" aria-labelledby="titulo-cambios">
+        <h2 id="titulo-cambios" class="titulo-seccion">Últimos cambios</h2>
+        <ol style="display: flex; flex-direction: column; gap: 10px">
+          <li class="cambio"><i class="plort plort--hecho plort--mini" aria-hidden="true"></i><span>Logro: Lo que dejaron los antiguos</span><span class="meta">hoy 18:42</span></li>
+          <li class="cambio"><i class="plort plort--hecho plort--mini" aria-hidden="true"></i><span>Zona desbloqueada: Ancient Ruins</span><span class="meta">hoy 18:40</span></li>
+          <li class="cambio"><i class="plort plort--hecho plort--mini" aria-hidden="true"></i><span>Slime descubierto: Quantum</span><span class="meta">hoy 18:31</span></li>
+          <li class="cambio"><i class="plort plort--hecho plort--mini" aria-hidden="true"></i><span>Slime descubierto: Hunter</span><span class="meta">ayer 22:10</span></li>
+          <li class="cambio"><i class="plort plort--hecho plort--mini" aria-hidden="true"></i><span>Slime descubierto: Honey</span><span class="meta">ayer 21:55</span></li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</main>
+</body>
+</html>

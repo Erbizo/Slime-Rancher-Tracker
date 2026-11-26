@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crear cuenta · Slime Rancher Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<script src="tema.js"></script>
+</head>
+<body>
+<main class="acceso">
+  <button type="button" class="btn-tema" data-alternar-tema aria-label="Cambiar a modo oscuro"><svg class="tema-luna" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="tema-sol" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+  <div class="acceso__caja">
+    <div class="acceso__siluetas" aria-hidden="true">
+      <i class="slime c-pink" style="width: 30px; height: 24px"></i>
+      <i class="slime c-rock" style="width: 24px; height: 19px"></i>
+      <i class="slime c-tabby" style="width: 34px; height: 27px"></i>
+      <i class="slime c-rad" style="width: 40px; height: 32px"></i>
+      <i class="slime c-honey" style="width: 34px; height: 27px"></i>
+      <i class="slime c-puddle" style="width: 26px; height: 21px"></i>
+      <i class="slime c-quantum" style="width: 30px; height: 24px"></i>
+    </div>
+
+    <section class="acceso__tarjeta tarjeta">
+      <div>
+        <h1 class="titulo-pagina" style="font-size: 32px">Crear cuenta</h1>
+        <p class="subtitulo">Tu cuenta guarda todas tus partidas.</p>
+      </div>
+
+      <!-- Estado de ejemplo: respuesta 400 con todos los errores de campo a la vez -->
+      <form style="display: flex; flex-direction: column; gap: 16px">
+        <label class="etiqueta"><span>Usuario</span>
+          <input class="campo" type="text" autocomplete="username" value="ab" aria-invalid="true">
+          <span class="error-campo">Entre 3 y 30 caracteres: letras, números o _.</span></label>
+        <label class="etiqueta"><span>Contraseña</span>
+          <input class="campo" type="password" autocomplete="new-password" value="slime" aria-invalid="true">
+          <span class="error-campo">Mínimo 8 caracteres, con al menos una letra y un número.</span></label>
+        <label class="etiqueta"><span>Repite la contraseña</span>
+          <input class="campo" type="password" autocomplete="new-password" value="slimes" aria-invalid="true">
+          <span class="error-campo">Las contraseñas no coinciden.</span></label>
+        <button type="submit" class="btn btn--primario" style="height: 48px; margin-top: 4px; font-size: 16px">Crear cuenta</button>
+      </form>
+    </section>
+
+    <p style="margin-top: 20px; text-align: center; color: var(--texto-2)">¿Ya tienes cuenta? <a href="entrar.html" style="font-weight: 600; text-decoration: none">Entrar</a></p>
+  </div>
+</main>
+</body>
+</html>

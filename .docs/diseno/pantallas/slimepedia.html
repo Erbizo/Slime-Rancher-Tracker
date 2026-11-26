@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slimepedia · Slime Rancher Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<script src="tema.js"></script>
+</head>
+<body>
+<header class="cabecera">
+  <a class="marca" href="panel.html"><span class="marca__slime" aria-hidden="true"></span><span class="marca__nombre">Slime Rancher Tracker</span></a>
+  <nav class="nav" aria-label="Principal">
+    <a href="panel.html">Panel</a>
+    <a href="zonas.html">Zonas</a>
+    <a href="slimepedia.html" aria-current="page">Slimepedia</a>
+    <a href="logros.html">Logros</a>
+  </nav>
+  <div class="cabecera__usuario">
+    <a class="selector-partida" href="partidas.html"><span>Partida</span><strong>Primera partida</strong>
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: var(--texto-3)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+    <button type="button" class="btn-tema" data-alternar-tema aria-label="Cambiar a modo oscuro"><svg class="tema-luna" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="tema-sol" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+    <a class="enlace-salir" href="entrar.html">Salir</a>
+  </div>
+</header>
+
+<main class="contenedor">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px">
+    <div>
+      <h1 class="titulo-pagina">Slimepedia</h1>
+      <p class="subtitulo">11 de 18 slimes descubiertos</p>
+    </div>
+    <div class="filtros">
+      <label style="display: flex; align-items: center; gap: 8px"><span style="color: var(--texto-2)">Zona</span>
+        <select class="select"><option>Todas</option><option>Dry Reef</option><option>Indigo Quarry</option><option>Moss Blanket</option><option>Ancient Ruins</option><option>Glass Desert</option><option>The Wilds</option></select>
+      </label>
+      <div class="segmentado" role="group" aria-label="Estado">
+        <button type="button" aria-pressed="true">Todos</button>
+        <button type="button" aria-pressed="false">Descubiertos</button>
+        <button type="button" aria-pressed="false">Por descubrir</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+    <section class="cuadricula-slimes" aria-label="Slimes">
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-pink"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Pink</span><span class="meta">Dry Reef</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-rock"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Rock</span><span class="meta">Dry Reef</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-tabby"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Tabby</span><span class="meta">Dry Reef</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-phosphor"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Phosphor</span><span class="meta">Dry Reef</span></button>
+      <button type="button" class="ficha" aria-pressed="true"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Dry Reef, ya puedes</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-rad"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Rad</span><span class="meta">Indigo Quarry</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-crystal"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Crystal</span><span class="meta">Indigo Quarry</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-puddle"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Puddle</span><span class="meta">Indigo Quarry</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-boom"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Boom</span><span class="meta">Moss Blanket</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-honey"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Honey</span><span class="meta">Moss Blanket</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-hunter"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Hunter</span><span class="meta">Moss Blanket</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Moss Blanket, ya puedes</span></button>
+      <button type="button" class="ficha" aria-pressed="false"><span class="slime c-quantum"><i class="slime__ojo slime__ojo--i"></i><i class="slime__ojo slime__ojo--d"></i><i class="slime__boca"></i></span><span class="ficha__nombre">Quantum</span><span class="meta">Ancient Ruins</span></button>
+      <button type="button" class="ficha ficha--lejana" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Glass Desert</span></button>
+      <button type="button" class="ficha ficha--lejana" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Glass Desert</span></button>
+      <button type="button" class="ficha ficha--lejana" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Glass Desert</span></button>
+      <button type="button" class="ficha ficha--lejana" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">Glass Desert</span></button>
+      <button type="button" class="ficha ficha--lejana" aria-pressed="false"><span class="slime slime--oculto"><span class="slime__interrogacion">?</span></span><span class="ficha__nombre">???</span><span class="meta">The Wilds</span></button>
+    </section>
+
+    <aside class="detalle tarjeta" aria-label="Detalle del slime">
+      <div style="display: flex; align-items: center; gap: 20px">
+        <span class="slime slime--grande slime--oculto" aria-hidden="true"><span class="slime__interrogacion">?</span></span>
+        <div style="min-width: 0">
+          <h2 class="detalle__nombre">???</h2>
+          <p class="subtitulo" style="margin-top: 4px">Sin descubrir</p>
+        </div>
+      </div>
+      <dl class="datos">
+        <dt>Zona</dt><dd>Dry Reef</dd>
+        <dt>Dieta</dt><dd>?</dd>
+        <dt>Rareza</dt><dd>?</dd>
+      </dl>
+      <button type="button" class="btn btn--primario" style="height: 48px; font-size: 16px">Marcar como descubierto</button>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
