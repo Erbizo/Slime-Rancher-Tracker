@@ -1,0 +1,266 @@
+# Slime Rancher Tracker - peticiones de la API
+# Se ejecutan en orden con el cliente HTTP de IntelliJ (guarda la cookie de sesión entre peticiones).
+# Requisito: `docker compose up --build -d` con los datos de db/init.sql.
+# Las modificaciones se hacen sobre una partida nueva ({{partidaId}}) para no tocar los datos del demo.
+# Ids del demo: partida 1 = Primera partida (rancher), 3 = Mi rancho (vecina).
+# Zonas: 1 The Ranch, 2 Dry Reef, 3 Indigo Quarry. Slimes: 1 Pink, 2 Rock, 3 Tabby, 5 Lucky, 6 Rad.
+
+@base = http://localhost:8080/api
+
+### Salud: la app llega a la BD → 200
+GET {{base}}/salud
+
+### Sin sesión → 401
+GET {{base}}/partidas
+
+### Registro con los tres campos mal → 400 con todos los errores a la vez
+POST {{base}}/auth/registro
+Content-Type: application/json
+
+{"nombreUsuario": "ab", "contrasena": "slime", "confirmacion": "slimes"}
+
+### Registro con un nombre ya usado → 409
+POST {{base}}/auth/registro
+Content-Type: application/json
+
+{"nombreUsuario": "rancher", "contrasena": "otra12345", "confirmacion": "otra12345"}
+
+### Login sin datos → 400
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{"nombreUsuario": "", "contrasena": ""}
+
+### Login con contraseña incorrecta → 401 (mismo mensaje que si el usuario no existe)
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{"nombreUsuario": "rancher", "contrasena": "incorrecta1"}
+
+### Login correcto → 200 (deja la sesión iniciada)
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{"nombreUsuario": "rancher", "contrasena": "slime1234"}
+
+### Usuario de la sesión → 200
+GET {{base}}/auth/yo
+
+### Catálogo de zonas → 200
+GET {{base}}/zonas
+
+### Catálogo de slimes filtrado → 200
+GET {{base}}/slimes?zonaId=2&dieta=CARNE
+
+### Filtro con un valor que no existe → 400
+GET {{base}}/slimes?dieta=PESCADO
+
+### Catálogo de logros → 200
+GET {{base}}/logros
+
+### Mis partidas → 200
+GET {{base}}/partidas
+
+### Crear partida → 201 + Location
+POST {{base}}/partidas
+Content-Type: application/json
+
+{"nombre": "Prueba API"}
+
+> {% client.global.set("partidaId", response.body.id); %}
+
+### Crear partida con nombre repetido → 409
+POST {{base}}/partidas
+Content-Type: application/json
+
+{"nombre": "Primera partida"}
+
+### Crear partida sin nombre → 400
+POST {{base}}/partidas
+Content-Type: application/json
+
+{"nombre": "   "}
+
+### Crear partida sin cuerpo → 400
+POST {{base}}/partidas
+Content-Type: application/json
+
+### JSON mal formado → 400
+POST {{base}}/partidas
+Content-Type: application/json
+
+{"nombre":
+
+### Una partida → 200
+GET {{base}}/partidas/{{partidaId}}
+
+### Partida que no existe → 404
+GET {{base}}/partidas/999999
+
+### Id no numérico → 400
+GET {{base}}/partidas/abc
+
+### Partida de otro usuario (vecina) → 403
+GET {{base}}/partidas/3
+
+### Modificar la partida de otro usuario → 403
+POST {{base}}/partidas/3/zonas/2
+
+### Borrar la partida de otro usuario → 403
+DELETE {{base}}/partidas/3
+
+### Renombrar → 200
+PUT {{base}}/partidas/{{partidaId}}
+Content-Type: application/json
+
+{"nombre": "Prueba API renombrada"}
+
+### Renombrar a un nombre que ya tienes → 409
+PUT {{base}}/partidas/{{partidaId}}
+Content-Type: application/json
+
+{"nombre": "Modo Rush"}
+
+### Progreso de la Primera partida del demo → 200, porcentajeGlobal 58
+GET {{base}}/partidas/1/progreso
+
+### Zonas de la partida → 200
+GET {{base}}/partidas/{{partidaId}}/zonas
+
+### Desbloquear Indigo Quarry sin Dry Reef → 409 "Primero tienes que desbloquear Dry Reef."
+POST {{base}}/partidas/{{partidaId}}/zonas/3
+
+### Desbloquear Dry Reef → 201
+POST {{base}}/partidas/{{partidaId}}/zonas/2
+
+### Desbloquear otra vez Dry Reef → 409
+POST {{base}}/partidas/{{partidaId}}/zonas/2
+
+### Desbloquear una zona que no existe → 404
+POST {{base}}/partidas/{{partidaId}}/zonas/999
+
+### Descubrir Pink → 201
+POST {{base}}/partidas/{{partidaId}}/slimes/1
+
+### Descubrir otra vez Pink → 409
+POST {{base}}/partidas/{{partidaId}}/slimes/1
+
+### Descubrir Rad (Indigo Quarry está bloqueada) → 409
+POST {{base}}/partidas/{{partidaId}}/slimes/6
+
+### Descubrir varios: Rock sí, Rad no → 409 y no se guarda ninguno (todo o nada)
+POST {{base}}/partidas/{{partidaId}}/slimes
+Content-Type: application/json
+
+{"slimeIds": [2, 6]}
+
+### Comprobar que Rock no se ha guardado: solo sale Pink → 200
+GET {{base}}/partidas/{{partidaId}}/slimes?descubierto=true
+
+### Descubrir varios válidos (Rock y Tabby) → 201
+POST {{base}}/partidas/{{partidaId}}/slimes
+Content-Type: application/json
+
+{"slimeIds": [2, 3]}
+
+### Descubrir varios con la lista vacía → 400
+POST {{base}}/partidas/{{partidaId}}/slimes
+Content-Type: application/json
+
+{"slimeIds": []}
+
+### Descubrir varios con un tipo incorrecto → 400
+POST {{base}}/partidas/{{partidaId}}/slimes
+Content-Type: application/json
+
+{"slimeIds": "todos"}
+
+### Filtro descubierto no válido → 400
+GET {{base}}/partidas/{{partidaId}}/slimes?descubierto=quizas
+
+### Nota de Pink → 200
+PUT {{base}}/partidas/{{partidaId}}/slimes/1/nota
+Content-Type: application/json
+
+{"nota": "Le encantan las zanahorias."}
+
+### Nota de más de 200 caracteres → 400
+PUT {{base}}/partidas/{{partidaId}}/slimes/1/nota
+Content-Type: application/json
+
+{"nota": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+
+### Nota de un slime sin descubrir (Lucky) → 409
+PUT {{base}}/partidas/{{partidaId}}/slimes/5/nota
+Content-Type: application/json
+
+{"nota": "Todavía no lo he visto."}
+
+### Bloquear Dry Reef con slimes descubiertos → 409
+DELETE {{base}}/partidas/{{partidaId}}/zonas/2
+
+### Bloquear la zona inicial → 409
+DELETE {{base}}/partidas/{{partidaId}}/zonas/1
+
+### Quitar Pink de la Slimepedia → 204
+DELETE {{base}}/partidas/{{partidaId}}/slimes/1
+
+### Quitar otra vez Pink → 409
+DELETE {{base}}/partidas/{{partidaId}}/slimes/1
+
+### Quitar Rock → 204
+DELETE {{base}}/partidas/{{partidaId}}/slimes/2
+
+### Quitar Tabby → 204
+DELETE {{base}}/partidas/{{partidaId}}/slimes/3
+
+### Bloquear Dry Reef ya sin slimes → 204
+DELETE {{base}}/partidas/{{partidaId}}/zonas/2
+
+### Logros de la partida → 200
+GET {{base}}/partidas/{{partidaId}}/logros
+
+### Marcar "Más allá del rancho" → 201
+POST {{base}}/partidas/{{partidaId}}/logros/1
+
+### Marcarlo otra vez → 409
+POST {{base}}/partidas/{{partidaId}}/logros/1
+
+### Marcar un logro que no existe → 404
+POST {{base}}/partidas/{{partidaId}}/logros/999
+
+### Nota del logro → 200
+PUT {{base}}/partidas/{{partidaId}}/logros/1/nota
+Content-Type: application/json
+
+{"nota": "Primera salida del rancho."}
+
+### Desmarcar → 204
+DELETE {{base}}/partidas/{{partidaId}}/logros/1
+
+### Desmarcar otra vez → 409
+DELETE {{base}}/partidas/{{partidaId}}/logros/1
+
+### Nota de un logro no conseguido → 409
+PUT {{base}}/partidas/{{partidaId}}/logros/1/nota
+Content-Type: application/json
+
+{"nota": "No debería guardarse."}
+
+### Ruta que no existe → 404
+GET {{base}}/no-existe
+
+### Método no permitido → 405
+PATCH {{base}}/partidas
+
+### Borrar la partida de prueba → 204
+DELETE {{base}}/partidas/{{partidaId}}
+
+### Borrarla otra vez → 404
+DELETE {{base}}/partidas/{{partidaId}}
+
+### Salir → 204
+POST {{base}}/auth/logout
+
+### Después de salir → 401
+GET {{base}}/partidas
