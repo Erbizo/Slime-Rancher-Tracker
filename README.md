@@ -1,5 +1,7 @@
 # Slime Rancher Tracker
 
+**Repositorio:** https://github.com/Erbizo/Slime-Rancher-Tracker
+
 Web para llevar el control de tus partidas de **Slime Rancher 1**. Cada usuario se registra, tiene varias partidas y en cada una marca tres cosas: **zonas desbloqueadas**, **slimes descubiertos** (la Slimepedia) y **logros conseguidos**. El panel calcula el porcentaje de progreso de la partida.
 
 Práctica de *Acceso a Datos* (2.º DAM): aplicación Java por capas con JDBC, desplegada con Docker Compose.
